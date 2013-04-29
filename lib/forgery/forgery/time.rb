@@ -9,4 +9,14 @@ class Forgery::Time < Forgery
     dictionaries[:zones].random.unextend
   end
 
+  def self.time
+    ::Time.parse("#{rand(0..23)}:#{rand(0..59)}:#{rand(0..59)}")
+  end
+
+  def self.datetime(options={})
+    options = {:future => false, :past => false, :min_delta => 0, :max_delta => 7300}.merge(options)
+
+    ::Time.parse("#{Forgery::Date.date(options).strftime("%Y-%m-%d")} #{Forgery::Time.time}")
+  end
+
 end

@@ -4,3 +4,5 @@
 .rakeTasks
 .rbc
 .iml
+.*.sw*
+.sw*

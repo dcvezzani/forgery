@@ -50,7 +50,17 @@ class Forgery::LoremIpsum < Forgery
   def self.sentences(quantity=2, options={})
     options.merge!(:random_limit => (dictionaries[:lorem_ipsum].length-quantity)) if quantity.is_a?(Fixnum)
 
-    dictionaries[:lorem_ipsum][range_from_quantity(quantity, options)].join(" ")
+    res = dictionaries[:lorem_ipsum][range_from_quantity(quantity, options)].join(" ")
+
+    if(options[:exact_overall_length] and options[:exact_overall_length] > 1)
+      res = res.slice(0, options[:exact_overall_length] - 1) + "."
+
+    elsif(options[:max_overall_length] and options[:max_overall_length] > 1)
+      res = res.slice(0, options[:max_overall_length] - 1) + "."
+      res.sub!(/[^\d\w]*\.$/, ".")
+    end
+
+    res
   end
 
   def self.paragraph(options={})

@@ -85,6 +85,13 @@ class Forgery::Basic < Forgery
     Forgery::Extend(options[:at_least]..options[:at_most]).random
   end
 
+  def self.float(options={})
+    options = {:at_least => 1.0,
+               :at_most => 10.0}.merge(options)
+
+    number(options)
+  end
+
   def self.text(options={})
     options = {:at_least      => 10,
                :at_most       => 15,

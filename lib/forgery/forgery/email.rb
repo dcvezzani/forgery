@@ -1,7 +1,7 @@
 class Forgery::Email < Forgery
 
-  def self.address
-    Forgery::Internet.email_address
+  def self.address(max_length=nil)
+    Forgery::Internet.email_address(max_length)
   end
 
   def self.subject(options={})

@@ -8,12 +8,22 @@ class Forgery::Internet < Forgery
     dictionaries[:top_level_domains].random.unextend
   end
 
-  def self.domain_name
-    dictionaries[:company_names].random.downcase + '.' + self.top_level_domain
+  def self.domain_name(max_length=nil)
+    suffix = '.' + self.top_level_domain
+    company_name = dictionaries[:company_names].random.downcase
+
+    if(!max_length.nil?)
+      company_name = company_name.slice(0, (max_length - suffix.length))
+    end
+
+    company_name + suffix
   end
 
-  def self.email_address
-    user_name + '@' + domain_name
+  def self.email_address(max_length=nil)
+    prefix = user_name + '@'
+    suffix_max_length = (max_length) ? max_length - prefix.length : nil
+
+    prefix + domain_name(suffix_max_length)
   end
 
   def self.email_subject(options={})
